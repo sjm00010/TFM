@@ -1,13 +1,17 @@
+import dotenv from "dotenv";
 import express from "express";
-import cors from "cors";
-
 import db from "./modelos/index.js";
-import usuarioRutas from "./rutas/usuario.rutas.js";
 import ejerciciosRutas from "./rutas/ejercicios.rutas.js";
+import usuarioRutas from "./rutas/usuario.rutas.js";
+
+// Cargar fichero de entorno
+dotenv.config();
+
+
 
 const app = express();
 db.mongoose
-  .connect(db.url, {
+  .connect(process.env.MONGODB, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true,
@@ -22,11 +26,11 @@ db.mongoose
     process.exit();
   });
 
-const corsOptions = {
-  origin: "https://wipace.ujaen.es"
-};
+// const corsOptions = {
+//   origin: "https://wipace.ujaen.es"
+// };
 
-app.use(cors(corsOptions));
+// app.use(cors(corsOptions));
 app.use(express.json());
 
 // Ruta de bienvenida al API
