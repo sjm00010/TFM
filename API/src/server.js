@@ -47,3 +47,5 @@ const PORT = process.env.PORT || 8081;
 app.listen(PORT, () => {
   console.log(`La API esta ejecutandose en http://localhost:${PORT}`);
 });
+
+export default app;
