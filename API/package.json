@@ -4,7 +4,8 @@
   "description": "API Restful con operaciones CRUD, con Express y MongoDB",
   "main": "server.js",
   "scripts": {
-    "start": "node src/server.js"
+    "start": "node src/server.js",
+    "build": "echo \"No build required\""
   },
   "keywords": [
     "nodejs",
