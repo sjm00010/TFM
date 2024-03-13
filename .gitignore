@@ -2,6 +2,8 @@
 node_modules
 dist
 
+# Temporary files
+old-api
 
 # local env files
 .env
