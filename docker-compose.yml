@@ -1,0 +1,44 @@
+version: '3.4'
+
+services:
+  apiwipace:
+    image: apiwipace
+    build:
+      context: API-TFG
+      dockerfile: ./Dockerfile
+    environment:
+      NODE_ENV: production
+    ports:
+      - 8081:8081
+    depends_on:
+      - wipacedb
+    networks:
+      - app-network
+
+  frontwipace:
+    image: frontwipace
+    build:
+      context: FRONT-TFG
+      dockerfile: ./Dockerfile
+    environment:
+      NODE_ENV: production
+    ports:
+      - 80:80
+    networks:
+      - app-network
+
+  wipacedb:
+    image: mongo:latest
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - app-network
+    ports:
+      - 27017:27017
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  mongodb_data:

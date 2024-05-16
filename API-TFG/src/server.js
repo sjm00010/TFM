@@ -1,9 +1,9 @@
-import express from "express";
 import cors from "cors";
+import express from "express";
 
 import db from "./modelos/index.js";
-import usuarioRutas from "./rutas/usuario.rutas.js";
 import ejerciciosRutas from "./rutas/ejercicios.rutas.js";
+import usuarioRutas from "./rutas/usuario.rutas.js";
 
 const app = express();
 db.mongoose
@@ -23,7 +23,7 @@ db.mongoose
   });
 
 const corsOptions = {
-  origin: "https://wipace.ujaen.es"
+  origin: "http://localhost"
 };
 
 app.use(cors(corsOptions));
