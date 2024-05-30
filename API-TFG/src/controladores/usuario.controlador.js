@@ -1,5 +1,5 @@
-import db from "../modelos/index.js";
 import bcrypt from "bcryptjs";
+import db from "../modelos/index.js";
 
 const Usuario = db.usuario;
 
@@ -10,22 +10,35 @@ const Usuario = db.usuario;
  * @param {*} res Respuesta
  */
 export const crear = (req, res) => {
-    const usuario = new Usuario({
+    const nuevoUsuario = new Usuario({
         ...req.body
     });
 
-    usuario.pass = bcrypt.hashSync(usuario.pass, 12);
+    Usuario.findOne({ usuario: nuevoUsuario.usuario })
+        .then(data => {
+            if (data) res.status(400).send({
+                message: "Usuario ya existe."
+            });
+            else {
+                nuevoUsuario.pass = bcrypt.hashSync(nuevoUsuario.pass, 12);
 
-    usuario
-        .save(usuario)
-        .then(() => {
-            res.status(201).send();
+                nuevoUsuario
+                    .save(nuevoUsuario)
+                    .then(() => {
+                        res.status(201).send();
+                    })
+                    .catch(err => {
+                        res.status(400).send({
+                            message: err.message || "ERROR: Se ha producido algun error mientras se creaba el usuario."
+                        });
+                    });
+            }
         })
         .catch(err => {
             res.status(500).send({
-            message: err.message || "ERROR: Se ha producido algun error mientras se creaba el usuario."
+                message: "ERROR: Se ha producido algun error mientras se obtenian los datos de usuario."
+            });
         });
-    });
 };
 
 /**
@@ -44,22 +57,22 @@ export const login = (req, res) => {
  * @param {*} next Siguiente función a ejecutar
  */
 export const verificarAuth = (req, res, next) => {
-    if(req.get('authorization')){
+    if (req.get('authorization')) {
         const [usuario, pass] = (Buffer.from(req.get('authorization')?.split(' ').pop(), 'base64')).toString('utf-8').split(':');
 
-        Usuario.findOne({usuario})
-        .then(data => {
-            if(data && bcrypt.compareSync(pass, data.pass)) next();
-            else res.status(400).send({
-                message: "Usuario o contraseña incorrectos."
+        Usuario.findOne({ usuario })
+            .then(data => {
+                if (data && bcrypt.compareSync(pass, data.pass)) next();
+                else res.status(400).send({
+                    message: "Usuario o contraseña incorrectos."
+                });
+            })
+            .catch(err => {
+                res.status(500).send({
+                    message: "ERROR: Se ha producido algun error mientras se obtenian los datos de usuario."
+                });
             });
-        })
-        .catch(err => {
-            res.status(500).send({
-                message: "ERROR: Se ha producido algun error mientras se obtenian los datos de usuario."
-            });
-        });
-    }else{
+    } else {
         res.status(400).send({
             message: "No se proporcionaron correctamente las credenciales"
         });

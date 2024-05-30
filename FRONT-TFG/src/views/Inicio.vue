@@ -43,6 +43,7 @@
         </mdb-row>
       </mdb-jumbotron>
 
+      <mdb-btn block v-show="!prof" outline="info" @click="verSignin"><p class="black-text my-0">Creación de un nuevo docente</p></mdb-btn>
       <mdb-btn block v-show="!prof" outline="danger" @click="verLogin"><p class="black-text my-0">Identificación para docentes</p></mdb-btn>
       <mdb-btn block v-show="prof" outline="warning" @click="logout"><p class="black-text my-0">Cerrar sesión</p></mdb-btn>
 
@@ -58,18 +59,45 @@
           <mdb-btn color="success" @click.native="login">Identificarse</mdb-btn>
         </div>
       </mdb-modal>
+
+      <mdb-modal centered :show="signin" @close="signin = false">
+        <mdb-modal-header>
+          <mdb-modal-title>Creación de un nuevo docente</mdb-modal-title>
+        </mdb-modal-header>
+        <mdb-modal-body class="py-0 grey-text">
+          <mdb-input label="Nombre completo" icon="user-edit" v-model="nombre" />
+          <mdb-input label="Email" icon="envelope" v-model="email" />
+          <mdb-input label="Usuario" icon="user" v-model="user" />
+          <mdb-input type="password" icon="lock" label="Contraseña" v-model="pass" @keyup.enter.native="login"/>
+        </mdb-modal-body>
+        <div class="text-center my-3">
+          <mdb-btn color="success" @click.native="crear">Crear</mdb-btn>
+        </div>
+      </mdb-modal>
     </mdb-container>
     <footermb/>
   </div>
 </template>
 
 <script>
-import {  mdbCard, mdbBtn, mdbJumbotron, mdbRow, mdbCol, mdbView, mdbIcon, mdbMask, 
-          mdbContainer, mdbModal, mdbModalHeader, mdbModalTitle, mdbModalBody, 
-          mdbInput} from 'mdbvue';
+import { URL } from '@/assets/js/auxiliares/api.config.js';
+import { getUser, logout, profesor } from '@/assets/js/login/identificacion.js';
 import footermb from '@/components/footer';
-import {profesor, getUser, logout} from '@/assets/js/login/identificacion.js';
-import {URL} from '@/assets/js/auxiliares/api.config.js';
+import {
+  mdbBtn,
+  mdbCard,
+  mdbCol,
+  mdbContainer,
+  mdbIcon,
+  mdbInput,
+  mdbJumbotron,
+  mdbMask,
+  mdbModal,
+  mdbModalBody,
+  mdbModalHeader, mdbModalTitle,
+  mdbRow,
+  mdbView
+} from 'mdbvue';
 export default {
   name: 'Inicio',
   components: {
@@ -81,6 +109,9 @@ export default {
   data() {
     return {
       modal: false,
+      signin: false,
+      nombre: '',
+      email: '',
       user: '',
       pass: '',
       error: false,
@@ -99,6 +130,39 @@ export default {
     verLogin(){
       this.modal = true;
       this.error = false;
+    },
+    verSignin(){
+      this.signin = true;
+      this.error = false;
+    },
+    crear(){
+      fetch(URL+'/usuario', { 
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({nombre: this.nombre, email: this.email, usuario: this.user, pass: this.pass}),
+        method: 'POST'
+      }).then(respuesta => {
+
+      if(respuesta.ok){
+        this.signin = false;
+        this.$notify({
+          group: 'log',
+          title: '<i class="fas fa-2x fa-user-circle"></i> <b class="h3">Profesor/a creado satisfactoriamente</b>',
+          text: '<i style="font-size:15px"> Se ha creado el usuario correctamente. Puede iniciar sesión con el usuario creado.</i>',
+          duration: 5000,
+          type: 'success'
+        });
+      }else{
+        respuesta.json().then(body => {
+        this.$notify({
+          group: 'log',
+          title: '<i class="fas fa-2x fa-times"></i> <b class="h3">Error en la creación</b>',
+          text: `<i style="font-size:15px"> ${body["message"]} </i>`,
+          duration: 5000,
+          type: 'error'
+        });
+      });
+      }
+    });
     },
     async login(){
       const respuesta = await fetch(URL+'/usuario/login', { 

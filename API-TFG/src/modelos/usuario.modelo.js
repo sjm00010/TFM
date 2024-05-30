@@ -2,6 +2,8 @@
 export default mongoose => {
   const schema = mongoose.Schema(
     {
+      nombre: {type: String, unique: true, required: true, minLength: [4, "El nombre debe tener 4 caracteres mínimo"]},
+      email: {type: String, unique: true, required: true, minLength: [4, "El email debe tener 4 caracteres mínimo"]},
       usuario: {type: String, unique: true, required: true, minLength: [4, "El usuario debe tener 4 caracteres mínimo"]},
       pass: {type: String, required: true, minLength: [6, "La contraseña debe tener 6 caracteres mínimo"]}
     }

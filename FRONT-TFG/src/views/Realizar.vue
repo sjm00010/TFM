@@ -15,7 +15,7 @@
     </mdb-jumbotron>
 
     <!-- Modal de la explicación -->
-    <mdb-modal size="lg" v-if="datos.ayuda && datos.ayuda.length !== 0"  :show="modal1" @close="modal1 = false">
+    <mdb-modal size="lg" v-if="datos.ayuda && datos.ayuda.length !== 0" :show="modal1" @close="modal1 = false">
         <mdb-modal-header>
             <mdb-modal-title>Explicación</mdb-modal-title>
         </mdb-modal-header>
@@ -52,14 +52,21 @@
 </template>
 
 <script>
-import { mdbJumbotron, mdbCardTitle, mdbBtn, mdbRow, mdbCol, 
-         mdbModal, mdbModalBody, mdbIcon,
-         mdbModalTitle, mdbModalFooter, mdbModalHeader, 
-        } from 'mdbvue';
-import viga from '@/components/visualizar/vigas/viga';
+import { cargaEjercicio, ejMatriz, ejMohr, ejViga, limpiar } from '@/assets/js/auxiliares/ejercicioJSON.js';
 import mohr from '@/components/visualizar/circulosMohr/mohr';
 import matriz from '@/components/visualizar/matrices/matriz';
-import { cargaEjercicio, ejViga, ejMatriz, ejMohr, limpiar } from '@/assets/js/auxiliares/ejercicioJSON.js';
+import viga from '@/components/visualizar/vigas/viga';
+import {
+    mdbBtn,
+    mdbCardTitle,
+    mdbCol,
+    mdbIcon,
+    mdbJumbotron,
+    mdbModal, mdbModalBody,
+    mdbModalFooter, mdbModalHeader,
+    mdbModalTitle,
+    mdbRow,
+} from 'mdbvue';
 export default {
     name: "EjercicioViga",
     components:{
@@ -72,7 +79,9 @@ export default {
         return {
             tipo: this.$route.params.tipo,
             cab: '',
-            datos: undefined
+            datos: undefined,
+            modal1: false,
+            modal2: false
         };
     },
     async beforeRouteEnter (to, from, next) {
