@@ -58,18 +58,24 @@
 </template>
 
 <script>
-import {mdbCard, mdbCardBody, mdbCardTitle, mdbCardText, 
-        mdbInput, mdbRow, mdbCol, mdbBtn, mdbIcon,
-         } from 'mdbvue';
-import enunciado from '@/components/editor/enunciado';
+import { URL } from '@/assets/js/auxiliares/api.config.js';
+import { cargaEjercicio, compruebaTramos } from '@/assets/js/auxiliares/ejercicio.js';
+import { ejViga, ejercicio } from '@/assets/js/auxiliares/ejercicioJSON.js';
+import { calcular, inicializar } from '@/assets/js/vigas/calculos.js';
+import { elementos, vincularTramos } from '@/assets/js/vigas/variables.js';
 import dibujar from '@/components/auxVigas/dibujaViga';
 import formulas from '@/components/auxVigas/formulas';
+import enunciado from '@/components/editor/enunciado';
 import grafica from '@/components/visualizar/vigas/grafica';
-import { inicializar, calcular } from '@/assets/js/vigas/calculos.js';
-import { vincularTramos, elementos } from '@/assets/js/vigas/variables.js';
-import { compruebaTramos, cargaEjercicio } from '@/assets/js/auxiliares/ejercicio.js';
-import { ejercicio, ejViga } from '@/assets/js/auxiliares/ejercicioJSON.js';
-import {URL} from '@/assets/js/auxiliares/api.config.js';
+import {
+    mdbBtn,
+    mdbCard, mdbCardBody,
+    mdbCardText,
+    mdbCardTitle,
+    mdbCol,
+    mdbIcon,
+    mdbInput, mdbRow,
+} from 'mdbvue';
 export default {
     name: 'formularioViga',
     components: {
@@ -165,7 +171,7 @@ export default {
 
             const respuesta = await fetch(URL+'/ejercicio/viga/', { 
                 headers: {'Content-Type': 'application/json', 
-                          'Authorization': "Basic " + btoa(sessionStorage.getItem("user")+':'+sessionStorage.getItem("pass"))
+                          'Authorization': "Basic " + btoa(sessionStorage.getItem("token"))
                 },
                 method: 'POST',
                 body: ej
@@ -205,7 +211,7 @@ export default {
 
             const respuesta = await fetch(URL+'/ejercicio/viga/'+this.$route.params.id, { 
                 headers: {'Content-Type': 'application/json',
-                          'Authorization': "Basic " + btoa(sessionStorage.getItem("user")+':'+sessionStorage.getItem("pass"))
+                          'Authorization': "Basic " + btoa(sessionStorage.getItem("token"))
                 },
                 method: 'PUT',
                 body: ej

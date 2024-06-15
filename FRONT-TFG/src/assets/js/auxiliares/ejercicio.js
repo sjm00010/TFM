@@ -1,4 +1,4 @@
-import {URL} from '@/assets/js/auxiliares/api.config.js';
+import { URL } from '@/assets/js/auxiliares/api.config.js';
 
 /**
  * Clase con la información básica de un ejercicio
@@ -13,7 +13,7 @@ export class Ejercicio {
      * @param {String} ayuda Explicación del ejercicio en HTML.
      * @param {String} video URL del vídeo explicativo
      */
-    constructor( id, dificultad, enunciado = '', ayuda = '', video = '') {
+    constructor(id, dificultad, enunciado = '', ayuda = '', video = '') {
         this.id = id;
         this.dificultad = dificultad;
         this.enunciado = enunciado;
@@ -41,7 +41,7 @@ export class Viga extends Ejercicio {
      * @param {Number} E Módulo elástico
      * @param {Number} I Momento de inercia
      */
-    constructor( id, dificultad, enunciado = '', ayuda = '', video = '', tramos = [], elementos = [], formulas = [], auxiliares = [], E, I) {
+    constructor(id, dificultad, enunciado = '', ayuda = '', video = '', tramos = [], elementos = [], formulas = [], auxiliares = [], E, I) {
         super(id, dificultad, enunciado, ayuda, video);
         this._tramos = tramos;
         this._elementos = elementos;
@@ -51,35 +51,35 @@ export class Viga extends Ejercicio {
         this.I = I;
     }
 
-    set tramos(nTramos){
+    set tramos(nTramos) {
         this._tramos.splice(0, this._tramos.length, ...nTramos);
     }
 
-    set elementos(nElementos){
+    set elementos(nElementos) {
         this._elementos.splice(0, this._elementos.length, ...nElementos);
     }
 
-    set formulas(nFormulas){
+    set formulas(nFormulas) {
         this._formulas.splice(0, this._formulas.length, ...nFormulas);
     }
 
-    set auxiliares(nAuxiliares){
+    set auxiliares(nAuxiliares) {
         this._auxiliares.splice(0, this._auxiliares.length, ...nAuxiliares);
     }
 
-    get tramos(){
+    get tramos() {
         return this._tramos;
     }
 
-    get elementos(){
+    get elementos() {
         return this._elementos;
     }
 
-    get formulas(){
+    get formulas() {
         return this._formulas;
     }
 
-    get auxiliares(){
+    get auxiliares() {
         return this._auxiliares;
     }
 }
@@ -106,7 +106,7 @@ export class Mohr extends Ejercicio {
      * @param {Number} E 
      * @param {Number} v 
      */
-    constructor( id, dificultad, enunciado = '', ayuda = '', video = '', sx, sy, txy, s1, s2, a, B, E, v) {
+    constructor(id, dificultad, enunciado = '', ayuda = '', video = '', sx, sy, txy, s1, s2, a, B, E, v) {
         super(id, dificultad, enunciado, ayuda, video);
         this.sx = sx;
         this.sy = sy;
@@ -124,7 +124,7 @@ export class Mohr extends Ejercicio {
  * Clase con la información de un ejercicio de matrices
  * @type Matriz
  */
- export class Matriz extends Ejercicio {
+export class Matriz extends Ejercicio {
     /**
      * Constructor de ejercicio de matrices
      * @param {String} id ID numerico del ejercicio.
@@ -139,7 +139,7 @@ export class Mohr extends Ejercicio {
      * @param {Array} bc Matriz con las condiciones de contorno
      * @param {Array} cargas Matriz con las cargas
      */
-    constructor( id, dificultad, enunciado = '', ayuda = '', video = '', materiales = [], secciones = [], nodos = [], barras = [], bc = [], cargas = []) {
+    constructor(id, dificultad, enunciado = '', ayuda = '', video = '', materiales = [], secciones = [], nodos = [], barras = [], bc = [], cargas = []) {
         super(id, dificultad, enunciado, ayuda, video);
         this._materiales = materiales;
         this._secciones = secciones;
@@ -149,51 +149,51 @@ export class Mohr extends Ejercicio {
         this._cargas = cargas;
     }
 
-    set materiales(nMateriales){
+    set materiales(nMateriales) {
         this._materiales.splice(0, this._materiales.length, ...nMateriales);
     }
 
-    set secciones(nSecciones){
+    set secciones(nSecciones) {
         this._secciones.splice(0, this._secciones.length, ...nSecciones);
     }
 
-    set nodos(nNodos){
+    set nodos(nNodos) {
         this._nodos.splice(0, this._nodos.length, ...nNodos);
     }
 
-    set barras(nBarras){
+    set barras(nBarras) {
         this._barras.splice(0, this._barras.length, ...nBarras);
     }
 
-    set bc(nBc){
+    set bc(nBc) {
         this._bc.splice(0, this._bc.length, ...nBc);
     }
 
-    set cargas(nCargas){
+    set cargas(nCargas) {
         this._cargas.splice(0, this._cargas.length, ...nCargas);
     }
 
-    get materiales(){
+    get materiales() {
         return this._materiales;
     }
 
-    get secciones(){
+    get secciones() {
         return this._secciones;
     }
 
-    get nodos(){
+    get nodos() {
         return this._nodos;
     }
 
-    get barras(){
+    get barras() {
         return this._barras;
     }
 
-    get bc(){
+    get bc() {
         return this._bc;
     }
 
-    get cargas(){
+    get cargas() {
         return this._cargas;
     }
 }
@@ -207,15 +207,15 @@ export class Mohr extends Ejercicio {
  * @param {Array} tramos Vector de tramos
  * @returns Vector de errores
  */
-export function compruebaTramos(tramos){
+export function compruebaTramos(tramos) {
     let error = [];
     tramos.forEach((tramo, pos) => {
-        if(tramo.min=='' || parseFloat(tramo.min) > parseFloat(tramo.max))
-            error.push(('min'+(pos+1)));
-        if (tramo.max=='' || parseFloat(tramo.max) < parseFloat(tramo.min))
-            error.push(('max'+(pos+1)));
-        if (tramo.valor=='' || parseFloat(tramo.valor) < parseFloat(tramo.min) || parseFloat(tramo.valor) > parseFloat(tramo.max))
-            error.push(('valor'+(pos+1)));
+        if (tramo.min == '' || parseFloat(tramo.min) > parseFloat(tramo.max))
+            error.push(('min' + (pos + 1)));
+        if (tramo.max == '' || parseFloat(tramo.max) < parseFloat(tramo.min))
+            error.push(('max' + (pos + 1)));
+        if (tramo.valor == '' || parseFloat(tramo.valor) < parseFloat(tramo.min) || parseFloat(tramo.valor) > parseFloat(tramo.max))
+            error.push(('valor' + (pos + 1)));
     });
     return error;
 }
@@ -224,10 +224,10 @@ export function compruebaTramos(tramos){
  * Función que carga todos los ejercicios
  * @returns True si todo se cargó correctamente, false en caso de que haya algún error.
  */
-export async function cargarEjercicios(){
-    if(await cargaEjercicio('viga') === null) return false;
-    if(await cargaEjercicio('matriz') === null) return false;
-    if(await cargaEjercicio('mohr') === null) return false;
+export async function cargarEjercicios() {
+    if (await cargaEjercicio('viga') === null) return false;
+    if (await cargaEjercicio('matriz') === null) return false;
+    if (await cargaEjercicio('mohr') === null) return false;
     return true;
 }
 
@@ -239,15 +239,15 @@ export var vigas = [], mohr = [], matriz = [];
  * @param {String} tipo Tipo del ejercicio a cargar
  * @returns Null en caso de error
  */
-export async function cargaEjercicio(tipo){
-    const respuesta = await fetch(URL+'/ejercicio/'+tipo, { 
-        headers: {'Content-Type': 'application/json'},
+export async function cargaEjercicio(tipo) {
+    const respuesta = await fetch(URL + '/ejercicio/' + tipo, {
+        headers: { 'Content-Type': 'application/json' },
         method: 'GET'
     });
 
-    if(!respuesta.ok) return null;
+    if (!respuesta.ok) return null;
 
-    switch(tipo){
+    switch (tipo) {
         case 'viga':
             vigas.splice(0, vigas.length, ...await respuesta.json());
             break;
@@ -268,17 +268,18 @@ export async function cargaEjercicio(tipo){
  * @param {String} tipo Tipo de ejercicio
  * @returns True si tiene éxito, false en caso contrario
  */
-export async function borrarEjercicio(id, tipo){
-    const respuesta = await fetch(URL+'/ejercicio/'+tipo+'/'+id, { 
-        headers: {'Content-Type': 'application/json', 
-                  'Authorization': "Basic " + btoa(sessionStorage.getItem("user")+':'+sessionStorage.getItem("pass"))
+export async function borrarEjercicio(id, tipo) {
+    const respuesta = await fetch(URL + '/ejercicio/' + tipo + '/' + id, {
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': "Basic " + btoa(sessionStorage.getItem("token"))
         },
         method: 'DELETE'
     });
-    
-    if(respuesta.ok){
-        if(await cargaEjercicio(tipo) === null) return false;
+
+    if (respuesta.ok) {
+        if (await cargaEjercicio(tipo) === null) return false;
         return true;
-    }else
+    } else
         return false;
 }

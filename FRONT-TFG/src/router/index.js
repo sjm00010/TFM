@@ -24,24 +24,18 @@ export default new Router({
       path: '/ejercicios/nuevo',
       name: 'Editor',
       component: Editor,
-      beforeEnter: (to, from, next) => {
-        if (!sessionStorage.getItem("user") || !sessionStorage.getItem("pass")) {
-          next('/');
-        } else {
-          next();
-        }
+      beforeEnter: (_, __, next) => {
+        if (!sessionStorage.getItem("token")) next('/');
+        else next();
       }
     },
     {
       path: '/ejercicios/modificar/:tipo/:id',
       name: 'Modificador',
       component: Modificador,
-      beforeEnter: (to, from, next) => {
-        if (!sessionStorage.getItem("user") || !sessionStorage.getItem("pass")) {
-          next('/');
-        } else {
-          next();
-        }
+      beforeEnter: (_, __, next) => {
+        if (!sessionStorage.getItem("token")) next('/');
+        else next();
       }
     },
     {

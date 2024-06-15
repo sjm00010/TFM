@@ -179,15 +179,22 @@
 </template>
 
 <script>
-import {mdbCard, mdbCardBody, mdbCardTitle, mdbCardText, 
-        mdbInput, mdbBtn, mdbIcon, mdbRow, mdbCol,
-         } from 'mdbvue';
-import enunciado from '@/components/editor/enunciado';
+import { URL } from '@/assets/js/auxiliares/api.config.js';
 import { cargaEjercicio } from '@/assets/js/auxiliares/ejercicio.js';
-import { ejercicio, ejMatriz } from '@/assets/js/auxiliares/ejercicioJSON.js';
-import { compruebaDatosBasicos, compruebaValoresSeleccionados } from '@/assets/js/matriz/funAuxFormulario.js';
-import {URL} from '@/assets/js/auxiliares/api.config.js';
+import { ejMatriz, ejercicio } from '@/assets/js/auxiliares/ejercicioJSON.js';
 import * as dibujo from '@/assets/js/matriz/dibujado.js';
+import { compruebaDatosBasicos, compruebaValoresSeleccionados } from '@/assets/js/matriz/funAuxFormulario.js';
+import enunciado from '@/components/editor/enunciado';
+import {
+    mdbBtn,
+    mdbCard, mdbCardBody,
+    mdbCardText,
+    mdbCardTitle,
+    mdbCol,
+    mdbIcon,
+    mdbInput,
+    mdbRow,
+} from 'mdbvue';
 export default {
     name: 'formularioMatriz',
     components: {
@@ -384,7 +391,7 @@ export default {
 
                 const respuesta = await fetch(URL+'/ejercicio/matriz/', { 
                     headers: {'Content-Type': 'application/json', 
-                            'Authorization': "Basic " + btoa(sessionStorage.getItem("user")+':'+sessionStorage.getItem("pass"))
+                            'Authorization': "Basic " + btoa(sessionStorage.getItem("token"))
                     },
                     method: 'POST',
                     body: ej
@@ -428,7 +435,7 @@ export default {
 
                 const respuesta = await fetch(URL+'/ejercicio/matriz/'+this.$route.params.id, { 
                     headers: {'Content-Type': 'application/json',
-                            'Authorization': "Basic " + btoa(sessionStorage.getItem("user")+':'+sessionStorage.getItem("pass"))
+                            'Authorization': "Basic " + btoa(sessionStorage.getItem("token"))
                     },
                     method: 'PUT',
                     body: ej

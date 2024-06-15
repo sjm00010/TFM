@@ -17,7 +17,7 @@
                 "credentials": "include",
                 "headers": {
                     "Content-Type": "application/json",
-                    "Authorization": "Basic " + btoa(sessionStorage.getItem("user") + ':' + sessionStorage.getItem("pass")),
+                    "Authorization": "Basic " + btoa(sessionStorage.getItem("token")),
                 },
                 "referrer": "https://wipace.ujaen.es",
                 "body": "{\"dificultad\":1,\"enunciado\":\"asd\",\"ayuda\":\"\",\"video\":\"\",\"sx\":1,\"sy\":1,\"txy\":1,\"B\":1,\"E\":1,\"v\":1}",

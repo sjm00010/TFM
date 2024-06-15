@@ -4,19 +4,14 @@ export let profesor = false;
 /**
  * Función para comprobar el usuario
  */
-export function getUser(){
-    const log = sessionStorage.getItem("user");
-    if (!log)
-        profesor = false;
-    else
-        profesor = true;
+export function getUser() {
+    profesor = sessionStorage.getItem("token") ? true : false;
 }
 
 /**
  * Función que borra los datos de autenticación guardados
  */
-export function logout(){
-    sessionStorage.setItem("user", '');
-    sessionStorage.setItem("pass", '');
+export function logout() {
+    sessionStorage.removeItem("token");
     profesor = false;
 }

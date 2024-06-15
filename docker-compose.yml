@@ -8,6 +8,9 @@ services:
       dockerfile: ./Dockerfile
     environment:
       NODE_ENV: production
+      JWT_SECRET: 97ddbc2c8401b4006ceeff76b6fbb6be4405a0a8406cbf1c6354f21bd2771abd48b6848f9d8b1d9360c41851d32a8925e1fece173ba238cb7cd8630014d00724
+      JWT_EXPIRES_IN: 1h
+      DB_URL: mongodb://wipacedb:27017/tfg
     ports:
       - 8081:8081
     depends_on:

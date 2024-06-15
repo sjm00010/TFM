@@ -119,17 +119,22 @@
 </template>
 
 <script>
-import {mdbCard, mdbCardBody, mdbCardTitle, mdbCardText, 
-        mdbBtn, mdbIcon, mdbRow, mdbCol
-         } from 'mdbvue';
-import enunciado from '@/components/editor/enunciado';
-import dibujos from '@/components/visualizar/circulosMohr/dibujos';
-import { ejercicio, ejMohr } from '@/assets/js/auxiliares/ejercicioJSON.js';
+import { URL } from '@/assets/js/auxiliares/api.config.js';
 import { cargaEjercicio } from '@/assets/js/auxiliares/ejercicio.js';
+import { ejMohr, ejercicio } from '@/assets/js/auxiliares/ejercicioJSON.js';
 import * as cal from '@/assets/js/mohr/calculos.js';
 import * as dib from '@/assets/js/mohr/dibujarCirculo.js';
 import * as cua from '@/assets/js/mohr/dibujarCuadrado.js';
-import {URL} from '@/assets/js/auxiliares/api.config.js';
+import enunciado from '@/components/editor/enunciado';
+import dibujos from '@/components/visualizar/circulosMohr/dibujos';
+import {
+    mdbBtn,
+    mdbCard, mdbCardBody,
+    mdbCardText,
+    mdbCardTitle,
+    mdbCol,
+    mdbIcon, mdbRow
+} from 'mdbvue';
 export default {
     name: 'formularioViga',
     components: {
@@ -314,7 +319,7 @@ export default {
 
             const respuesta = await fetch(URL+'/ejercicio/mohr/', { 
                 headers: {'Content-Type': 'application/json', 
-                          'Authorization': "Basic " + btoa(sessionStorage.getItem("user")+':'+sessionStorage.getItem("pass"))
+                          'Authorization': "Basic " + btoa(sessionStorage.getItem("token"))
                 },
                 method: 'POST',
                 body: ej
@@ -352,7 +357,7 @@ export default {
 
             const respuesta = await fetch(URL+'/ejercicio/mohr/'+this.$route.params.id, { 
                 headers: {'Content-Type': 'application/json',
-                          'Authorization': "Basic " + btoa(sessionStorage.getItem("user")+':'+sessionStorage.getItem("pass"))
+                          'Authorization': "Basic " + btoa(sessionStorage.getItem("token"))
                 },
                 method: 'PUT',
                 body: ej

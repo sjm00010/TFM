@@ -173,8 +173,9 @@ export default {
       });
 
       if(respuesta.ok){ // Usuario y contraseña válidos
-        sessionStorage.setItem("user", this.user);
-        sessionStorage.setItem("pass", this.pass);
+        const body = await respuesta.json();
+        if (body.token) sessionStorage.setItem("token", body.token);
+        else console.error('Token not found in the response body');
         this.prof = true;
         this.modal = false;
         this.$notify({
