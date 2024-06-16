@@ -49,5 +49,5 @@ spec:
     - name: api-wipace
       protocol: TCP
       port: 8081
-      nodePort: 30081
+      targetPort: 8081
   type: NodePort  # Puedes usar ClusterIP o NodePort dependiendo de tu necesidad
