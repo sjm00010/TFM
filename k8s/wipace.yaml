@@ -1,0 +1,53 @@
+# APP DEPLOYMENT
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    run: wipace-deployment 
+  name: wipace-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: wipace-app
+  template:
+    metadata:
+      labels:
+        app: wipace-app
+    spec:
+      containers:
+      - name: front-wipace
+        image: frontwipace:latest
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 80
+      - name: api-wipace
+        image: apiwipace:latest
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 8081
+      - name: wipace-db
+        image: mongo:latest
+        ports:
+        - containerPort: 27017
+---
+# APP SERVICE
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    run: wipace-service 
+  name: wipace-service
+spec:
+  selector:
+    app: wipace-app
+  ports:
+    - name: front-wipace
+      protocol: TCP
+      port: 80
+      nodePort: 30080
+    - name: api-wipace
+      protocol: TCP
+      port: 8081
+      nodePort: 30081
+  type: NodePort  # Puedes usar ClusterIP o NodePort dependiendo de tu necesidad
